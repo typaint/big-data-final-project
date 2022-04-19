@@ -1,0 +1,109 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(viridis)
+prediction_data <- read_csv("Downloads/prediction_data.csv")
+View(prediction_data)
+```
+
+```{r}
+prediction_data <- prediction_data %>% 
+  mutate(error = prediction - price,
+         abs_error = abs(prediction - price),
+         pct_error = abs_error  / price)
+```
+
+```{r}
+ggplot(prediction_data, aes(x=error)) + 
+  geom_histogram(binwidth=5000) +
+  scale_x_continuous(labels = scales::dollar_format(prefix="$", suffix = "K")) + 
+  xlab("Prediction - Price") +
+  ylab("Count") +
+  ggtitle("Raw Error Distribution") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()
+```
+
+```{r}
+ggplot(prediction_data, aes(x=abs_error)) + 
+  geom_histogram(binwidth=5000) +
+  scale_x_continuous(labels = scales::dollar_format(prefix="$", suffix = "K")) + 
+  xlab("|Prediction - Price|") +
+  ylab("Count") +
+  ggtitle("Absolute Error Distribution") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()
+```
+
+```{r}
+ggplot(prediction_data, aes(x=pct_error)) + 
+  geom_histogram(binwidth=.01) +
+  scale_x_continuous(labels = scales::percent_format(suffix = "%")) + 
+  xlab("Absolute Error / Price") +
+  ylab("Count") +
+  ggtitle("Percent Error Distribution") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()
+```
+
+```{r}
+library(ggcorrplot)
+corr_dat <- prediction_data %>% 
+  select(-X1, -street, -city, -statezip)
+corr <- round(cor(corr_dat), 2)
+ggcorrplot(corr, title = "Correlation Plot")
+```
+```{r}
+corr_dat <- prediction_data %>% 
+  select(-X1, -street, -city, -statezip) %>% 
+  filter(abs_error>100000)
+corr <- round(cor(corr_dat), 2)
+ggcorrplot(corr, title = "Correlation Plot with \nAbsolute Error over $100K")
+```
+
+
+```{r}
+summary(prediction_data$error)
+```
+```{r}
+summary(prediction_data$abs_error)
+```
+
+```{r}
+less <- nrow(prediction_data %>% 
+                 filter(pct_error<=.05))
+less/nrow(prediction_data)
+```
+
+```{r}
+ggplot(prediction_data, aes(x=pct_error)) + 
+  geom_histogram(binwidth=.01) +
+  scale_x_continuous(limits=c(-.01,.12), labels = scales::percent_format(suffix = "%")) + 
+  xlab("Percent Error") +
+  ylab("Count") +
+  ggtitle("Percent Error Distribution") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()
+```
+
+```{r}
+prediction_data %>% 
+  group_by(city) %>% 
+  summarise(within5_pct = round(sum(pct_error<.05)/n(),2)) %>% 
+  ggplot(aes(x=within5_pct)) +
+  geom_histogram(binwidth=.02) +
+  scale_x_continuous(labels = scales::percent_format(suffix = "%")) + 
+  xlab("Percent") +
+  ylab("Count") +
+  ggtitle("% Within 5% Error Per Metro Area") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()
+```
+
