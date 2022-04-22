@@ -2,7 +2,7 @@
 title: "Intro_Visual"
 author: "Connor Mignone"
 date: "4/18/2022"
-output: html_document
+output: pdf_document
 ---
 
 ```{r}
@@ -13,7 +13,7 @@ library(readr)
 ```
 
 ```{r}
-ZestAccuracy <- read_excel("C:/Users/Connor Mignone/Desktop/Data_Science_Spring_2022/big_data/final_project/ZestAccuracy.xlsx", 
+ZestAccuracy <- read_excel("../data/ZestAccuracy.xlsx", 
     col_types = c("text", "text", "text", 
         "text", "text", "text", "text"))
 View(ZestAccuracy)
