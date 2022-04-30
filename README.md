@@ -6,12 +6,12 @@
 -	**prediction_data.csv:** data used for plotting and evaluation
 -	**ZestAccuracy.xlsx:** Zillow estimate data
 ## documents
--	**final_report.docx:** final report
--	**proposal.docx:** project proposal
--	**slides.pdf:** presentation slides
+-	**final_report:** final report
+-	**proposal:** project proposal
+-	**slides:** presentation slides
 -	**Slide Changes:** changes made to the slides after presentation
 ## modeling
-- **Housing_Price_ErrorCalc_Coe_AWS:** Error calculations, Regression Coefficients, AWS creation
+- **Housing_Price_ErrorCalc_Coe_AWS.ipynb:** Error calculations, Regression Coefficients, AWS creation
 -	**Housing_Price_Prediction.ipynb:** data pipelines and linear regression model
 ## plots
 -	**results-plots:** graphics for the results section
