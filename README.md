@@ -9,6 +9,7 @@
 -	**proposal.docx:** project proposal
 -	**slides.pptx:** presentation slides
 ## modeling
+- **Housing_Price_ErrorCalc_Coe_AWS:** Error calculations, Regression Coefficients, AWS creation
 -	**Housing_Price_Prediction.ipynb:** data pipelines and linear regression model
 ## plots
 -	**results-plots.Rmd:** graphics for the results section
