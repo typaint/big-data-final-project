@@ -11,7 +11,6 @@
 -	**slides:** presentation slides
 -	**Slide Changes:** changes made to the slides after presentation
 ## modeling
-- **Housing_Price_ErrorCalc_Coe_AWS.ipynb:** Error calculations, Regression Coefficients, AWS creation
 -	**Housing_Price_Prediction.ipynb:** data pipelines and linear regression model
 ## plots
 -	**results-plots:** graphics for the results section
